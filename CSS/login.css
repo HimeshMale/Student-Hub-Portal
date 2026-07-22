@@ -1,0 +1,39 @@
+body{
+    
+}
+.logo{
+    width: 150%;
+    height: 150%;
+    position: fixed;
+    z-index: -2;
+}
+#text{
+    background-color:  rgba(211, 211, 211, 0.67);
+}
+.Login{
+    border: 2px solid rgb(255, 255, 255);
+    background-color: #E9F1FA;
+    width: 400px;
+    height: 300px;
+    align-items: center;
+    margin: auto;
+    margin-top: 100px;
+}
+h1{
+    text-align: center;
+}
+main{
+    text-align: center;
+    margin-top: 30px;
+}
+a:link{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: #00FFFF;
+}
+#home{
+    background-color:#00ABE4;
+    margin-right: 90px;
+}
