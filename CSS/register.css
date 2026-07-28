@@ -7,19 +7,11 @@
 
 body {
   font-family: Arial, sans-serif;
-}
-
-
-.Login {
-  width: 300px;
-  background-color: white;
-  padding: 20px;
-  border: 1px solid #ccc;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 header h1 {
@@ -27,6 +19,10 @@ header h1 {
 }
 
 main {
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
   text-align: left;
 }
 
@@ -42,7 +38,7 @@ input {
   border: 1px solid #ccc;
 }
 
-#home {
+button {
   width: 100%;
   padding: 10px;
   margin-top: 15px;
@@ -51,7 +47,7 @@ input {
   cursor: pointer;
 }
 
-#home a {
+button a {
   color: white;
   text-decoration: none;
 }
