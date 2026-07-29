@@ -1,3 +1,21 @@
+				Student Hub Portal
+
+
+Required Analysis:
+Login/Register
+Profile
+Events
+Attendance
+Fees Section 
+Time table
+Material Section
+Result
+Contact
+About
+
+
+
+
 Student Hub Portal
 │
 ├── Login / Register
@@ -8,14 +26,14 @@ Student Hub Portal
 │   ├── Profile
 │   │   ├── Personal Details
 │   │   └── Edit Profile
-│   ├── Attendance(Student can see ,Faculty can add present/absent)
+│   ├── Attendance(Student can see)
 │   ├── Fees
 │   │   ├── Fee Status
 │   │   └── Payment History
 │   ├── Time Table
 │   ├── Material
 │   │   ├── Notes
-│   │   └── Assignments(Student can see + add,Faculty can add and evaluate)
+│   │   └── Assignments(Student can see)
 │   ├── Events
 │   └── Result
 │
