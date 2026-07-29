@@ -1,0 +1,28 @@
+Student Hub Portal
+│
+├── Login / Register
+│   ├── Login
+│   └─ Register
+│
+├── Dashboard
+│   ├── Profile
+│   │   ├── Personal Details
+│   │   └── Edit Profile
+│   ├── Attendance(Student can see ,Faculty can add present/absent)
+│   ├── Fees
+│   │   ├── Fee Status
+│   │   └── Payment History
+│   ├── Time Table
+│   ├── Material
+│   │   ├── Notes
+│   │   └── Assignments(Student can see + add,Faculty can add and evaluate)
+│   ├── Events
+│   └── Result
+│
+├── Contact
+│   ├── Contact Form
+│   └── Support
+│
+└── About
+    ├── College Information
+    └── FAQ
