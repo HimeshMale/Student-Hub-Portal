@@ -16,10 +16,9 @@ About
 
 Student Hub Portal
 │
-├── Login / Register(Student,Admin,Faculty)
+├── Login / Register
 │   ├── Login
-│   ├── Register
-│   └── Forgot Password
+│   └─ Register
 │
 ├── Dashboard
 │   ├── Profile

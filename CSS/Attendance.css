@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
 }
 
 header h1 {
@@ -22,7 +22,7 @@ nav {
 nav a {
   margin: 0 10px;
   color: #4CAF50;
-  text-decoration: none;
+  
 }
 
 main {
