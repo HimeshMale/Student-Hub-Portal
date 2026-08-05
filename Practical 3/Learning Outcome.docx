@@ -1,0 +1,38 @@
+In this Practical,I have learnt about CSS3 properties such as:
+General format:
+Selector{
+    property:value;
+}
+Selectors are the html tags on which property should be applied.
+Properties by the name we get to know that what property like color or font-size 
+we need change.
+Basic properties like:
+Text-align
+color
+background-color
+font-size
+font-family
+border
+border-boxing
+Some special/important properties:
+display(how the element layout should look)
+position(to set position of element)
+display:flex(we create a layout called flexbox)
+flexbox has some more properties like:
+flex-direction
+justify-content
+align-item
+align-content 
+and many more
+
+I also learnt about difference between Relative and Absolute units:
+For example: font-size:20px(this is absolute unit)
+height: 50% (this is relative ,it will have 50% height of body or browser)
+
+Also I learnt about:
+transform and its properties:
+skew
+rotate
+translate
+
+Also about @media,@keyframes(used for animation)
