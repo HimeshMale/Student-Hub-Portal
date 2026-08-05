@@ -21,3 +21,8 @@ p(paragraph)
 caption
 table and the following tags it has like th,td,tr,thead,etc
 input and label.
+
+Challenge Faced :
+One challenge I faced was getting the page layout to look right when nesting semantic tags, since incorrect nesting 
+sometimes broke the structure and styling. I also found it tricky at first to decide whether certain content belonged 
+inside main or aside, as the difference between primary and secondary content wasn't always clear.
