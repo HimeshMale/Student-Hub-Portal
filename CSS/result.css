@@ -66,3 +66,22 @@ footer {
   padding: 10px;
   color: #555;
 }
+/* new dark mode css added  */
+.top-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 8px 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+body.dark-mode {
+  background-color: #1a1a2e;
+  color: #dcdcdc;
+}
+body.dark-mode nav a {
+  color: #4CAF50;
+}
