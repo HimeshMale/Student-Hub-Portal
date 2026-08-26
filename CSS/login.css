@@ -61,3 +61,22 @@ a {
   margin-top: 10px;
   color: #4CAF50;
 }
+#login{
+  background-color:#4CAF50 ;
+  color:white;
+  cursor: pointer;
+}
+.error-msg {
+  display: block;
+  color: red;
+  font-size: 0.85em;
+  margin-top: 2px;
+  min-height: 1em; 
+}
+input.invalid {
+  border: 2px solid red;
+}
+
+input.valid {
+  border: 2px solid green;
+}

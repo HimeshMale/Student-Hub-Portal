@@ -1,30 +1,33 @@
-
-
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../CSS/login.css" />
-    <title>Login</title>
-  </head>
-  <body>
 
-    <div class="Login">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="../CSS/login.css" />
+  <title>Login</title>
+</head>
+
+<body>
+
+  <div class="Login">
     <header>
       <h1>Login</h1>
-    </header>  
+    </header>
     <main>
-     <label for="usrname">Username:</label>
-    <input type="text" name="usrname" id="usrname" required><br><br>
-    <label for="passwd">Password:</label>
-    <input type="password" name="passwd" id="passwd" required>
-    <p>&nbsp;</p>
-     <button id="home">Login</button>
-
-    <a href="Register.html">New User?</a>
+      <form action="home.html" id="form">
+        <label for="usrname">Username:</label>
+        <input type="text" name="usrname" id="usr" required>
+        <span class="error-msg" id="usrError"></span>
+        <label for="passwd">Password:</label>
+        <input type="password" name="passwd" id="passwd" required>
+        <span class="error-msg" id="passwdError"></span>
+        <p>&nbsp;</p>
+        <input type="submit" value="Login" id="login">
+        <a href="Register.html">New User?</a>
     </main>
-    </div>
+  </div>
+  </form>
+  <script src="../JS/login.js"></script>
+</body>
 
-    <script src="../JS/login.js"></script>
-  </body>
 </html>
