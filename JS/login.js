@@ -53,6 +53,8 @@ passwordInput.addEventListener("blur", () => {
 });
 
 form.addEventListener("submit", (e) => {
+  e.preventDefault(); // stop the browser's default page reload/submit
+
   const isUsernameValid = validateField(
     usernameInput,
     usrRegex,
@@ -67,7 +69,6 @@ form.addEventListener("submit", (e) => {
   );
 
   if (!isUsernameValid || !isPasswordValid) {
-    e.preventDefault();
     return;
   }
 

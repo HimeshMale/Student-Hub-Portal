@@ -6,25 +6,30 @@
     <title>Login</title>
   </head>
   <body>
-   
-    <div class="Login">
-    <header>
-      <h1>Login</h1>
-    </header>  
-    <main>
-     <label for="usrname">Username:</label>
-    <input type="text" name="usrname" id="text" required><br><br>
-    <label for="passwd">Password:</label>
-    <input type="password" name="passwd" id="text" required>
-    <p>&nbsp;</p>
-     <button id="home">
-        <a href="home.html">Login</a>
-    </button>
-  
-    <a href="Register.html">New User?</a>
-    </main>
-    </div>
-    <script src="../JS/script.js"></script>
 
+    <div class="Login">
+      <header>
+        <h1>Login</h1>
+      </header>
+      <main>
+        <form id="form">
+          <label for="usr">Username:</label>
+          <input type="text" name="usr" id="usr" required />
+          <span id="usrError" class="error-msg"></span>
+          
+
+          <label for="passwd">Password:</label>
+          <input type="password" name="passwd" id="passwd" required />
+          <span id="passwdError" class="error-msg"></span>
+          <p>&nbsp;</p>
+
+          <button type="submit" id="home">Login</button>
+        </form>
+
+        <a href="Register.html">New User?</a>
+      </main>
+    </div>
+
+    <script src="../JS/login.js"></script>
   </body>
- </html>
+</html>

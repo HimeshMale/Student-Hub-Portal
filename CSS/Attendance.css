@@ -54,6 +54,11 @@ footer {
   color: #555;
 }
 /* new dark mode css added  */
+body {
+  background-color: #ffffff;
+  color: #000000;
+}
+
 .top-btn {
   position: fixed;
   top: 15px;
@@ -71,4 +76,8 @@ body.dark-mode {
 }
 body.dark-mode nav a {
   color: #4CAF50;
+}
+
+a{
+  text-decoration: none;
 }

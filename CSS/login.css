@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -79,4 +78,7 @@ input.invalid {
 
 input.valid {
   border: 2px solid green;
+}
+button{
+  color:white;
 }

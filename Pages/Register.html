@@ -12,11 +12,14 @@
     </header>
     <main>
       <label for="usrname">Username:</label>
-      <input type="text" name="usrname" required /><br /><br />
+      <input type="text" name="usrname" id="usrname" required /><br /><br />
+      <div id="usrError" class="error-msg"></div>
       <label for="passwd">Password:</label>
-      <input type="password" name="passwd" required /><br /><br />
+      <input type="password" name="passwd" id="passwd" required /><br /><br />
+      <div id="passwdError" class="error-msg"></div>
       <label for="confirmpasswd">Confirm Password:</label>
-      <input type="password" name="passwd" required />
+      <input type="password" name="passwd" id="confirmpasswd" required />
+      <div id="confirmPasswdError" class="error-msg"></div>
       <p>&nbsp;</p>
       <button>
         <a href="login.html">Register</a>
@@ -24,5 +27,6 @@
 
       <a href="login.html">Already a User?</a>
     </main>
+    <script src="../JS/register.js"></script>
   </body>
 </html>
