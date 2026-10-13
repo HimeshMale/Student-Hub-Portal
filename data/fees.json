@@ -1,0 +1,20 @@
+[
+  {
+    "term": "Semester 1",
+    "amountDue": 77500,
+    "amountPaid": 0,
+    "status": "Unpaid"
+  },
+  {
+    "term": "Semester 2",
+    "amountDue": 77500,
+    "amountPaid": 0,
+    "status": "Unpaid"
+  },
+  {
+    "term": "Semester 3",
+    "amountDue": 77500,
+    "amountPaid": 0,
+    "status": "Unpaid"
+  }
+]

@@ -94,3 +94,15 @@ body.dark-mode {
 body.dark-mode nav a {
   color: #4CAF50;
 }
+
+#feeMessage {
+  font-weight: bold;
+}
+
+#feeMessage.success {
+  color: #2e7d32;
+}
+
+#feeMessage.error {
+  color: #c62828;
+}

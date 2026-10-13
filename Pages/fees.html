@@ -29,43 +29,28 @@
       <p>Review your fee status and payment history for this academic year.</p>
 
       <table border="1" cellpadding="6">
-        <caption>Fee Summary</caption>
-        <thead>
-          <tr>
-            <th>Term</th>
-            <th>Amount Due</th>
-            <th>Amount Paid</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Semester 1</td>
-            <td>₹77,500</td>
-            <td>₹77,500</td>
-            <td>Paid</td>
-          </tr>
-          <tr>
-            <td>Semester 2</td>
-            <td>₹77,500</td>
-            <td>₹77,500</td>
-            <td>Paid</td>
-          </tr>
-          <tr>
-            <td>Semester 3</td>
-            <td>₹77,500</td>
-            <td>₹74,000</td>
-            <td>UnPaid</td>
-          </tr>
-        </tbody>
-      </table>
+  <caption>Fee Summary</caption>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Amount Due</th>
+      <th>Amount Paid</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="feeTableBody">
+    <tr>
+      <td colspan="4">Loading fee data...</td>
+    </tr>
+  </tbody>
+</table>
 
-      <p><button type="button">Pay Now</button></p>
+<p><button type="button" id="payNowBtn">Pay Now</button></p>
     </main>
-
     <footer>
       <p>Student Hub Portal@2026</p>
     </footer>
     <script src="../JS/script.js"></script>
+    <script src="../JS/fees.js"></script>
   </body>
 </html>
