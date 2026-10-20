@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Students (Fetch API)</title>
+<style>
+  :root { --ink:#1d2433; --muted:#667085; --line:#d9dee7; --bg:#f5f7fb; --card:#fff;
+          --accent:#1f5eff; --ok:#137a3d; --okbg:#e6f6ec; --err:#b42318; --errbg:#fdecea; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,Segoe UI,Arial,sans-serif; background:var(--bg); color:var(--ink); }
+  .wrap { max-width:960px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-size:1.6rem; margin:0 0 16px; }
+  h2 { font-size:1.1rem; margin:0 0 12px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:16px; }
+  #msg { padding:10px 14px; border-radius:6px; margin-bottom:16px; font-size:.95rem; display:none; }
+  #msg.success { display:block; background:var(--okbg); color:var(--ok); border:1px solid #b7e3c7; }
+  #msg.error   { display:block; background:var(--errbg); color:var(--err); border:1px solid #f4b8b2; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; }
+  label { display:flex; flex-direction:column; font-size:.85rem; color:var(--muted); gap:4px; flex:1 1 180px; }
+  input, select { padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-size:.95rem; }
+  input:focus, select:focus, button:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  input[readonly] { background:#eef1f6; }
+  button { padding:8px 14px; border:0; border-radius:6px; background:var(--accent); color:#fff; font-size:.9rem; cursor:pointer; }
+  button.secondary { background:#e8ecf3; color:var(--ink); }
+  button.danger { background:var(--err); }
+  button:disabled { opacity:.55; cursor:not-allowed; }
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:.93rem; }
+  th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:600; }
+  td.actions { white-space:nowrap; }
+  td.actions button + button { margin-left:6px; }
+  .state { color:var(--muted); text-align:center; padding:24px; }
+  .spinner { display:inline-block; width:14px; height:14px; border:2px solid var(--line); border-top-color:var(--accent);
+             border-radius:50%; animation:spin .7s linear infinite; vertical-align:-2px; margin-right:6px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spinner { animation:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Student Management (Fetch API)</h1>
+
+  <div id="msg" role="alert"></div>
+
+  <div class="card">
+    <h2 id="formTitle">Add student</h2>
+    <form id="studentForm" class="row" novalidate>
+      <label>Student ID
+        <input id="student_id" required maxlength="20" placeholder="e.g. 25DCE011" autocomplete="off">
+      </label>
+      <label>Name
+        <input id="name" required maxlength="100" placeholder="e.g. Rudra" autocomplete="off">
+      </label>
+      <label>Course
+        <select id="course" required>
+          <option value="">Select course</option>
+          <option>Computer Engineering</option>
+          <option>Computer Science</option>
+          <option>Information Technology</option>
+        </select>
+      </label>
+      <button type="submit" id="saveBtn">Add student</button>
+      <button type="button" id="cancelBtn" class="secondary" hidden>Cancel</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Search and filter</h2>
+    <div class="row">
+      <label>Search by ID, name or course
+        <input id="q" type="search" placeholder="e.g. 25DCE, rudra">
+      </label>
+      <label>Course
+        <select id="filterCourse">
+          <option value="">All courses</option>
+          <option>Computer Engineering</option>
+          <option>Computer Science</option>
+          <option>Information Technology</option>
+        </select>
+      </label>
+      <button type="button" id="resetBtn" class="secondary">Reset</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Students (<span id="count">0</span>)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Student ID</th><th>Name</th><th>Course</th><th>Actions</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const COURSE_BY_CODE = { DCE: 'Computer Engineering', DCS: 'Computer Science', DIT: 'Information Technology' };
+let editing = false;
+let msgTimer;
+
+/* ---------- Feedback messages ---------- */
+function showMsg(type, text) {
+  const box = $('msg');
+  box.className = type;          // 'success' or 'error'
+  box.textContent = text;
+  clearTimeout(msgTimer);
+  if (type === 'success') msgTimer = setTimeout(() => { box.className = ''; }, 4000);
+}
+
+/* ---------- One helper for every API call ---------- */
+async function api(url, options = {}) {
+  let res;
+  try {
+    res = await fetch(url, options);
+  } catch (err) {
+    throw new Error('Network error: could not reach the server.');
+  }
+  let body;
+  try {
+    body = await res.json();
+  } catch (err) {
+    throw new Error('Server returned an invalid response (HTTP ' + res.status + ').');
+  }
+  if (!res.ok || !body.success) throw new Error(body.message || 'Request failed.');
+  return body;
+}
+const postJSON = (url, data) => api(url, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data)
+});
+
+/* ---------- LIST (GET) with loading state ---------- */
+async function loadStudents() {
+  const tbody = $('tbody');
+  tbody.replaceChildren(stateRow('<span class="spinner"></span>Loading students...'));
+  const params = new URLSearchParams({ q: $('q').value.trim(), course: $('filterCourse').value });
+  try {
+    const body = await api('api/list.php?' + params);
+    renderRows(body.data);
+  } catch (err) {
+    $('count').textContent = '0';
+    tbody.replaceChildren(stateRow('Could not load students.'));
+    showMsg('error', err.message);
+  }
+}
+
+function stateRow(html) {
+  const tr = document.createElement('tr');
+  const td = document.createElement('td');
+  td.colSpan = 4; td.className = 'state'; td.innerHTML = html;
+  tr.appendChild(td);
+  return tr;
+}
+
+function renderRows(students) {
+  $('count').textContent = students.length;
+  const tbody = $('tbody');
+  if (!students.length) {
+    tbody.replaceChildren(stateRow('No students found. Add one above or change your search.'));
+    return;
+  }
+  tbody.replaceChildren(...students.map(s => {
+    const tr = document.createElement('tr');
+    [s.student_id, s.name, s.course].forEach(v => {
+      const td = document.createElement('td');
+      td.textContent = v;                       // textContent prevents XSS
+      tr.appendChild(td);
+    });
+    const actions = document.createElement('td');
+    actions.className = 'actions';
+
+    const edit = document.createElement('button');
+    edit.className = 'secondary'; edit.textContent = 'Edit';
+    edit.onclick = () => startEdit(s);
+
+    const del = document.createElement('button');
+    del.className = 'danger'; del.textContent = 'Delete';
+    del.onclick = () => removeStudent(s, del);
+
+    actions.append(edit, del);
+    tr.appendChild(actions);
+    return tr;
+  }));
+}
+
+/* ---------- ADD / UPDATE (POST) ---------- */
+$('studentForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const data = {
+    student_id: $('student_id').value.trim().toUpperCase(),
+    name: $('name').value.trim(),
+    course: $('course').value
+  };
+
+  // Client-side validation (the server validates again)
+  if (!/^\d{2}(DCE|DCS|DIT)\d{3}$/.test(data.student_id)) return showMsg('error', 'Student ID must look like 25DCE011.');
+  if (!data.name)   return showMsg('error', 'Name is required.');
+  if (!data.course) return showMsg('error', 'Please select a course.');
+
+  const btn = $('saveBtn'), label = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Saving...';
+  try {
+    const body = await postJSON(editing ? 'api/update.php' : 'api/add.php', data);
+    showMsg('success', body.message);
+    resetForm();
+    loadStudents();
+  } catch (err) {
+    showMsg('error', err.message);
+    btn.textContent = label;
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+/* ---------- DELETE (POST) with confirmation ---------- */
+async function removeStudent(s, btn) {
+  if (!confirm('Delete ' + s.student_id + ' - ' + s.name + '? This cannot be undone.')) return;
+  btn.disabled = true; btn.textContent = 'Deleting...';
+  try {
+    const body = await postJSON('api/delete.php', { student_id: s.student_id });
+    showMsg('success', body.message);
+    if (editing && $('student_id').value === s.student_id) resetForm();
+    loadStudents();
+  } catch (err) {
+    showMsg('error', err.message);
+    btn.disabled = false; btn.textContent = 'Delete';
+  }
+}
+
+/* ---------- Form helpers ---------- */
+function startEdit(s) {
+  editing = true;
+  $('student_id').value = s.student_id; $('student_id').readOnly = true;
+  $('name').value = s.name;
+  $('course').value = s.course;
+  $('formTitle').textContent = 'Edit student';
+  $('saveBtn').textContent = 'Save changes';
+  $('cancelBtn').hidden = false;
+  $('name').focus();
+}
+function resetForm() {
+  editing = false;
+  $('studentForm').reset();
+  $('student_id').readOnly = false;
+  $('formTitle').textContent = 'Add student';
+  $('saveBtn').textContent = 'Add student';
+  $('cancelBtn').hidden = true;
+}
+$('cancelBtn').onclick = resetForm;
+
+// Auto-select the course from the branch code in the ID
+$('student_id').addEventListener('input', function () {
+  const m = this.value.toUpperCase().match(/^\d{2}(DCE|DCS|DIT)/);
+  if (m) $('course').value = COURSE_BY_CODE[m[1]];
+});
+
+/* ---------- Search / filter ---------- */
+let searchTimer;
+$('q').addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(loadStudents, 300); });
+$('filterCourse').addEventListener('change', loadStudents);
+$('resetBtn').onclick = () => { $('q').value = ''; $('filterCourse').value = ''; loadStudents(); };
+
+loadStudents();
+</script>
+</body>
+</html>
