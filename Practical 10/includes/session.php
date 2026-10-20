@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/auth.php";
 
-const SESSION_TIMEOUT = 5;   // seconds of inactivity (5 min). Use 30 to test quickly.
+const SESSION_TIMEOUT = 300;   // seconds of inactivity (5 min). Use 30 to test quickly.
 
 function startSecureSession(): void
 {
